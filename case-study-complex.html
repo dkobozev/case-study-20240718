@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spigot Case Study</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+  <style>
+    li { max-width: 85%; overflow-wrap: anywhere; }
+  </style>
+  <script>
+    window.onload = () => {
+      try {
+      // Populate Task 2.
+      const secondTaskEl = document.querySelector('ol li:nth-of-type(2)');
+      const s = atob([
+        'Rm9yIHRoaXMgdGFzaywgZGVjcnlwdCB0YXNrIDMgdG8gc2Vl',
+        'IHRoZSBmaW5hbCBzb2x1dGlvbiB0byBwcmVzZW50LjxzY3Jp',
+        'cHQgY2xhc3M9InJ1biI+bGV0IHRoaXJkID0gZG9jdW1lbnQu',
+        'cXVlcnlTZWxlY3Rvcignb2wgbGk6bnRoLW9mLXR5cGUoMykn',
+        'KTsgdGhpcmQuc2V0QXR0cmlidXRlKCdkYXRhLWl2JywgJ2E4',
+        'MGQ4YzU5MDAxMWM0N2UzNzM0NDc1YicpOyB0aGlyZC5pbm5l',
+        'ckhUTUw9J2VuY3J5cHRlZCBhczogPGNvZGU+ZGZmYWE0NjVh',
+        'YmNlMmRlNTc1NGE1OThlNzhlYTUzNzQ2NmVlNDcxNDljMzUx',
+        'ZGY5NTY0MTgzYWE3OTgzN2EyMzI2MWJlMjYyMjI5NDg3NDBh',
+        'MmFjYjI1YmJiZWExYTViMmY3Y2ZjMDUzMTEyMWQzODVlYTRm',
+        'MTRiYjM2YmM3ZTUyMTZhOTc2MjJlMDFhYWUzY2Q2ZTU1ZGY4',
+        'NWRlY2ZkM2Q1M2ExYzMxNzg5M2U3ZjFmYWFjNmRhYjJlMTEw',
+        'ZmE2Mzg5NzdjMGEyZGYzNjJkYWRiZTMyNTlmYjRmYWFhMWRh',
+        'Y2NkMzBiNDlhN2RlZTg3MDZjZDQzMmI3ZDllNjU5MDViYzE0',
+        'MDcyNGNjYTUzMmZiMjNmNjk5Mjc0NTU2ZGU3MTg3M2MwMDhm',
+        'ZmQxMmMyZTJiMGU8L2NvZGU+JzsgY29uc29sZS5sb2coJ0hl',
+        'cmUsIGluIHRoZSBkZXYgdG9vbHMgYXJlIGEgZ29vZCBwbGFj',
+        'ZSB0byBsb29rLiA6LSknKTwvc2NyaXB0Pg==',
+      ].join(''));
+      secondTaskEl.innerHTML = s;
+      } catch(e) { }
+    };
+  </script>
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html">
+
+    <h1 id="browser-team-case-study">R&amp;D Team Case Study</h1>
+
+    <p>Problem solving, bug fixing and <i>fun</i> with Windows APIs. These tasks should be kept down
+      to 2-3 hours of work and your solutions can be kept as straight forward as you like.</p>
+
+    <p>
+      <strong>Background / Scenario</strong>
+      <br>
+      On R&amp;D team we get to pioneer new technologies and often run into unique problems or find ourselves
+      implementing the type of things that aren't handily in docs or even readily available on places like
+      Stack Overflow. This case study is meant to simulate that by being a short scavenger hunt through some of
+      the technologies we're using for one of our products.
+    </p>
+
+    <p><strong>Your Task</strong></p>
+
+    <ol>
+      <li>Starting with this HTML document, find and implement the other tasks on this list.</li>
+
+      <li>&nbsp;</li>
+
+      <li>&nbsp;</li>
+    </ol>
+
+    <p>
+      Your solutions can be presented in either a public git repository or zipped and emailed. Please
+      include an already built and executable binary along with your code.
+    </p>
+  </div>
+
+  <script>
+    window.runDecrypt = (async () => {
+      const ab2hex = (ab) => [...new Uint8Array(ab)].map(x => x.toString(16).padStart(2, '0')).join('');
+      const hex2ba = (hex) => Uint8Array.from(hex.match(/.{1,2}/g).map(b => parseInt(b, 16)));
+
+      const key = await window.crypto.subtle.importKey(
+        'raw',
+        Uint8Array.from(window.rawKey),
+        'AES-GCM', true, ['encrypt', 'decrypt']
+      );
+
+      async function decrypt(key, iv, ciphertext) {
+        const decrypted = await crypto.subtle.decrypt(
+          { name: 'AES-GCM', iv },
+          key,
+          ciphertext
+        );
+
+        const decryptedText = new TextDecoder().decode(decrypted)
+        const thirdEl = document.querySelector("ol li:nth-of-type(3)");
+        thirdEl.innerHTML = decryptedText;
+      }
+
+      const getCipherText = () => document.querySelector("code").innerText;
+      const getIV = () => document.querySelector("ol li:nth-of-type(3)").dataset.iv;
+
+      try {
+        const ciphertext = getCipherText();
+        const iv = getIV();
+        await decrypt(key, hex2ba(iv), hex2ba(ciphertext));
+      } finally {
+        window.thirdDecrypted = true;
+      }
+    });
+  </script>
+
+  <script>
+    // I'm a block that helps makes the case-study work, hopefully no bugs in me, but maybe some clues ;)
+    setInterval(() => {
+      const scripts = document.querySelectorAll('script.run');
+      scripts.forEach((el) => {
+        const script = document.createElement('script');
+        script.text = el.innerHTML;
+        el.insertAdjacentElement('afterend', script);
+        el.remove();
+      })
+      window.rawKey = [
+        ...document.querySelectorAll('body > div, body > div *')
+      ].map((e,i) => Math.min(240+i, e.innerText.replaceAll(/\s/gi, '').length));
+
+      if (!window.thirdDecrypted)
+        runDecrypt();
+    }, 450)
+  </script>
+</body>
+
+</html>
